@@ -3,6 +3,7 @@
     "name": "CafeGram",
     "slug": "CafeGram",
     "version": "1.0.0",
+    "scheme": "cafegram",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,6 +22,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.rizalrezx.cafegram",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -28,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5a1c5c55-4b5e-4069-bd88-ee6bf43ce8ba"
+      }
     }
   }
 }
