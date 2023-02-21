@@ -11,15 +11,15 @@ const OptionElement = ({ item, selected, onPress }) => (
       alignItems: "center",
       marginVertical: 10,
       borderRadius: 5,
-      backgroundColor: selected === item ? colors.brandPink : "#fff",
+      backgroundColor: selected === item.value ? colors.brandPink : "#fff",
       elevation: 2
     }}
     onPress={onPress}
   >
     <Text
-      style={{ color: selected === item ? '#fff' : colors.brandPink, fontWeight: '500' }}
+      style={{ color: selected === item.value ? '#fff' : colors.brandPink, fontWeight: '500' }}
     >
-      {item}
+      {item.name}
     </Text>
   </TouchableOpacity>
 );
@@ -43,7 +43,7 @@ export default function CustomOption({ name, option, onChange, style }) {
         ? option.map((item, index) => (
             <OptionElement
               item={item}
-              onPress={() => setValue(item)}
+              onPress={() => setValue(item.value)}
               selected={value}
               key={index}
             />

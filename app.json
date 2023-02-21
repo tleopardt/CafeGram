@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "CafeGram",
+    "currentFullName": "cafegram",
+    "originalFullName": "cafegram",
     "slug": "CafeGram",
     "version": "1.0.0",
-    "scheme": "cafegram",
+    "scheme": "com.rizalrezx.cafegram",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +15,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/5a1c5c55-4b5e-4069-bd88-ee6bf43ce8ba"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,7 +27,7 @@
     "android": {
       "package": "com.rizalrezx.cafegram",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
@@ -35,6 +38,9 @@
       "eas": {
         "projectId": "5a1c5c55-4b5e-4069-bd88-ee6bf43ce8ba"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

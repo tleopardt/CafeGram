@@ -1,21 +1,28 @@
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import SwipeUpDownModal from "react-native-swipe-modal-up-down";
-import { fullHeight, fullWidth } from "../../styles";
+import { colors, fullHeight, fullWidth } from "../../styles";
 
 export default function Modal(props) {
   const {
-    visible = false,
-    animate = false,
+    visible,
     option,
     title = "Choose item from the list below",
     onClose,
+    onChange
   } = props;
+  const [selected, setSelected] = useState(option[0])
+
+  useEffect(() => {
+    if (selected) {
+      onChange(selected)
+      onClose()
+    }
+  }, [selected])
 
   return (
     <SwipeUpDownModal
       modalVisible={visible}
-      PressToanimate={animate}
       //if you don't pass HeaderContent you should pass marginTop in view of ContentModel to Make modal swipeable
       ContentModal={
         <View
@@ -50,10 +57,11 @@ export default function Modal(props) {
                   borderWidth: 1,
                   borderRadius: 5,
                   borderColor: "#e2e2e2",
+                  backgroundColor: item === selected ? colors.brandPink: '#fff'
                 }}
-                onPress={onClose}
+                onPress={() => setSelected(item)}
               >
-                <Text>{item}</Text>
+                <Text style={{ color: item === selected ? '#fff' : '#000' }}>{item}</Text>
               </TouchableOpacity>
             )}
           />

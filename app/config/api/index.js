@@ -5,7 +5,8 @@ import axios from 'axios';
  */
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.post['content-type'] = 'application/json';
+axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 export const API_CAFEGRAM = axios.create({
-    baseURL: 'http://10.0.2.2:8000/'
+    baseURL: 'https://api.npoint.io/'
 });

@@ -8,14 +8,16 @@ import Explore from "../screens/Explore/Explore";
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabs({ auth, setAuth }) {
+export default function Tabs(props) {
+  const { auth, logout } = props
+
   return (
     <Tab.Navigator screenOptions={tabScreenOption}>
       <Tab.Screen name={ROUTES.Home} component={Home} />
       <Tab.Screen name={ROUTES.Explore} component={Explore} />
       <Tab.Screen name={ROUTES.Profile}>
-        {(navigation) => (
-          <Profile navigation={navigation} auth={auth} setAuth={setAuth} />
+        {() => (
+          <Profile auth={auth} logout={logout} />
         )}
       </Tab.Screen>
     </Tab.Navigator>

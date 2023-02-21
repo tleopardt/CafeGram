@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Animated } from "react-native";
+import { View, Text, Animated, Image } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { colors, fullHeight, fullWidth } from "../../../styles";
 import Login from "./Form/Login";
@@ -6,9 +6,9 @@ import Register from "./Form/Register";
 import { socialAuthToken } from "../../../config/constant";
 import { GoogleAuth } from "./SocialLogin";
 import * as SecureStore from "expo-secure-store";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Auth({ setAuth }) {
-  const [loading, setLoading] = useState(false);
+export default function Auth({ setAuth, setIsVote }) {
   const [login, setLogin] = useState(true);
   const height = useRef(new Animated.Value(0)).current;
   const footerHeight = useRef(new Animated.Value(0)).current;
@@ -16,23 +16,17 @@ export default function Auth({ setAuth }) {
   const transition = new Animated.Value(0);
 
   useEffect(() => {
-    animationForm()
+    animationForm();
   }, []);
 
-  useEffect(() => {
-    if (loading) {
-      animationSlide()
-    }
-  }, [loading]);
-
-  const handleLogin = () => {
-    setLoading(true);
-  };
-
-  const handleSocialAuth = async (val) => {
+  const afterAuth = (val) => {
     if (val) {
-      await SecureStore.setItemAsync('auth_session', JSON.stringify(val))
-      setAuth(val);
+      animationSlide();
+
+      setTimeout(async () => {
+        await SecureStore.setItemAsync("auth_session", JSON.stringify(val));
+        setAuth(val);
+      }, 2000);
     }
   };
 
@@ -41,28 +35,12 @@ export default function Auth({ setAuth }) {
   };
 
   const animationSlide = () => {
-    setTimeout(() => {
-      Animated.timing(transition, {
-        toValue: -fullWidth,
-        duration: 250,
-        useNativeDriver: false,
-      }).start();
-
-      setTimeout(async () => {
-        setLoading(false);
-
-        await SecureStore.setItemAsync(
-          "auth_session",
-          JSON.stringify({
-            name: "Jonathan",
-          })
-        ).then(() => {
-          setAuth(true);
-        });
-
-      }, 1000);
-    }, 2000);
-  }
+    Animated.timing(transition, {
+      toValue: -fullWidth,
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const animationForm = () => {
     Animated.timing(width, {
@@ -84,51 +62,43 @@ export default function Auth({ setAuth }) {
         useNativeDriver: false,
       }).start();
     }, 800);
-  }
+  };
 
   return (
-    <Animated.View style={{ transform: [{ translateX: transition }] }}>
-      <ImageBackground
+    <SafeAreaView>
+      <Animated.View
         style={{
+          transform: [{ translateX: transition }],
           width: fullWidth,
           height: fullHeight,
-        }}
-        resizeMode="cover"
-        source={{
-          uri: "https://images.squarespace-cdn.com/content/v1/62e91f051b4d461f16d033a3/4319e53d-5a2a-4da2-ab77-2e7f4406d438/how-to-open-a-coffee-shop-in-singapore-food-shop-licenses%2B%281%29.jpg",
         }}
       >
         <View
           style={{
             flex: 1,
-            backgroundColor: `rgba(0,0,0,0.3)`,
+            backgroundColor: "#fcfcfc",
             justifyContent: "center",
             alignItems: "center",
             paddingHorizontal: 25,
           }}
         >
-          <Text
-            style={{
-              fontSize: 25,
-              fontWeight: "900",
-              color: "#fff",
-              paddingVertical: 20,
-            }}
-          >
-            CafeGram
-          </Text>
+          <Image
+            source={require("../../../../assets/login.png")}
+            style={{ width: 150, height: 150 }}
+            resizeMode="cover"
+          />
 
           <Animated.View
             style={{ width: "100%", height: height, overflow: "hidden" }}
           >
             {login ? (
-              <Login handleLogin={handleLogin} loading={loading} />
+              <Login afterAuth={afterAuth} />
             ) : (
-              <Register handleLogin={handleLogin} loading={loading} />
+              <Register afterAuth={afterAuth} />
             )}
             <Text
               style={{
-                color: "#fff",
+                color: "#000",
                 textAlign: "center",
                 fontWeight: "600",
                 paddingVertical: 20,
@@ -140,7 +110,8 @@ export default function Auth({ setAuth }) {
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <GoogleAuth
                 clientId={socialAuthToken.google}
-                onAuth={handleSocialAuth}
+                onAuth={afterAuth}
+                setIsVote={setIsVote}
               />
             </View>
           </Animated.View>
@@ -148,12 +119,12 @@ export default function Auth({ setAuth }) {
           <Animated.View
             style={{
               height: 0.5,
-              backgroundColor: "#fff",
+              backgroundColor: "rgba(0,0,0,0.3)",
               width: width,
               marginVertical: 20,
             }}
           />
-          <Animated.Text style={{ color: "#fff", height: footerHeight }}>
+          <Animated.Text style={{ color: "#000", height: footerHeight }}>
             {login
               ? `Don't have any existing account?`
               : "Already have an account?"}
@@ -163,7 +134,7 @@ export default function Auth({ setAuth }) {
           </Animated.Text>
           <View style={{ marginVertical: 10 }} />
         </View>
-      </ImageBackground>
-    </Animated.View>
+      </Animated.View>
+    </SafeAreaView>
   );
 }

@@ -21,8 +21,6 @@ export const tabScreenOption = ({ route }) => ({
   tabBarShowLabel: false,
   tabBarStyle: {
     borderTopWidth: 0,
-    borderTopEndRadius: 25,
-    borderTopStartRadius: 25,
     position: "absolute"
   },
 });

@@ -2,20 +2,23 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { avatar, colors, pageWrapper, rowContainer } from "../../../styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import * as SecureStore from "expo-secure-store";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Profile({ navigation, auth, setAuth }) {
+export default function Profile({ auth, logout }) {
   const {
     name,
     email,
     picture = "https://i.pinimg.com/originals/dd/e5/f9/dde5f9c5724e6dc550231eb56c8ac38d.jpg",
   } = auth;
+
   const handleLogout = async () => {
     await SecureStore.deleteItemAsync("auth_session");
-    setAuth(false);
+    logout();
   };
 
   return (
-    <View style={pageWrapper}>
+    <SafeAreaView style={pageWrapper}>
       <View
         style={{
           flexDirection: "row",
@@ -135,6 +138,6 @@ export default function Profile({ navigation, auth, setAuth }) {
         </Text>
         <Ionicons name="ios-chevron-forward" style={{ fontSize: 15 }} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }

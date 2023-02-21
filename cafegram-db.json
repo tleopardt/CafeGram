@@ -1,42 +1,44 @@
 {
   "account": [
-    {
-      "email": "ashiapjoko266@gmail.com",
-      "password": "123"
-    }
+   {
+    "email": "ashiapjoko266@gmail.com",
+    "password": "123"
+   }
   ],
   "vote": {
-    "view": 32,
-    "lokasi": 24,
-    "harga": 26,
-    "variasi_menu": 24,
-    "jam_buka": 22
+   "view": 32,
+   "lokasi": 24,
+   "harga": 26,
+   "variasi_menu": 24,
+   "jam_buka": 22
   },
   "parameter_kriteria": {
     "view": {
-      "sangat_bagus": 3,
-      "bagus": 2,
-      "biasa": 1
+     "natural": 10,
+     "coastal": 6,
+     "vintage": 5,
+     "modern": 8,
+     "industrial": 3
     },
     "lokasi": {
-      "pusat_kota": 3,
-      "tengah_kota": 2,
-      "pinggir_kota": 1
+     "pusat_kota": 18,
+     "tengah_kota": 10,
+     "pinggir_kota": 4
     },
     "harga": {
-      "rendah": 3,
-      "sedang": 2,
-      "tinggi": 1
+     "rendah": 18,
+     "sedang": 10,
+     "tinggi": 4
     },
     "variasi_menu": {
-      "lengkap": 3,
-      "cukup": 2,
-      "sedikit": 1
+     "lengkap": 18,
+     "cukup": 10,
+     "sedikit": 4
     },
     "jam_buka": {
-      "lama": 3,
-      "cukup": 2,
-      "sedikit": 1
+     "lama": 18,
+     "cukup": 10,
+     "sedikit": 4
     }
   },
   "list_cafe": [

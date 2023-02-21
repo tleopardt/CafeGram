@@ -2,33 +2,81 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ROUTES } from "../../config/constant";
+import { colors, fullWidth } from "../../styles";
 
-export default function Card(props) {
-  const { name, address, image, navigation } = props;
+export default function Card({
+  item,
+  navigation,
+  disabled,
+  orientation = "horizontal",
+}) {
+  const { nama_cafe, kecamatan, image } = item;
 
   return (
     <TouchableOpacity
-      style={styles.container}
-      onPress={() => navigation.navigate(ROUTES.DetailCafe, { data: { name: name, address: address, image: image } })}
+      onPress={() => navigation.navigate(ROUTES.DetailCafe, { data: item })}
+      disabled={disabled}
     >
-      {image && <Image style={styles.image} source={{ uri: image }} />}
-      <View style={{ padding: 15, flex: 1, flexWrap: "wrap" }}>
-        <Text style={styles.title} numberOfLines={1}>
-          {name}
-        </Text>
-        <Text style={styles.address} numberOfLines={1}>
-          <Ionicons name="ios-location" />
-          &nbsp;&nbsp;{address}
-        </Text>
-        <Text style={{ alignItems: "center", fontSize: 13 }}>
-          <Ionicons name="ios-star" style={{ color: "#ffe338" }} />
-          &nbsp;&nbsp;4.8&nbsp;
-          <Text style={{ fontWeight: "300" }}>(1500 Reviews)</Text>
-        </Text>
-      </View>
-      <View style={styles.promo.wrapper}>
-        <Text style={styles.promo.text}>10% OFF</Text>
-      </View>
+      {orientation === "vertical" ? (
+        <View
+          style={{
+            flexDirection: "column",
+            width: fullWidth / 2.5,
+            borderRadius: 15,
+            backgroundColor: "#fff",
+          }}
+        >
+          <Image
+            style={{
+              width: "100%",
+              height: 150,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              backgroundColor: '#e9e9e9',
+            }}
+            source={{ uri: image ? image : null }}
+          />
+          <View style={{ padding: 10, height: 90 }}>
+            {!disabled && (
+              <View>
+                <Text style={styles.title} numberOfLines={1}>
+                  {nama_cafe}
+                </Text>
+                <Text style={styles.address} numberOfLines={1}>
+                  <Ionicons name="ios-location" />
+                  &nbsp;&nbsp;{kecamatan}
+                </Text>
+                <Text style={{ alignItems: "center", fontSize: 13 }}>
+                  <Ionicons name="ios-star" style={{ color: "#ffe338" }} />
+                  &nbsp;&nbsp;4.8&nbsp;
+                  <Text style={{ fontWeight: "300" }}>(1500 Reviews)</Text>
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          {image && <Image style={styles.image} source={{ uri: image }} />}
+          <View style={{ padding: 15, flex: 1, flexWrap: "wrap" }}>
+            <Text style={styles.title} numberOfLines={1}>
+              {nama_cafe}
+            </Text>
+            <Text style={styles.address} numberOfLines={1}>
+              <Ionicons name="ios-location" />
+              &nbsp;&nbsp;{kecamatan}
+            </Text>
+            <Text style={{ alignItems: "center", fontSize: 13 }}>
+              <Ionicons name="ios-star" style={{ color: "#ffe338" }} />
+              &nbsp;&nbsp;4.8&nbsp;
+              <Text style={{ fontWeight: "300" }}>(1500 Reviews)</Text>
+            </Text>
+          </View>
+          <View style={styles.promo.wrapper}>
+            <Text style={styles.promo.text}>10% OFF</Text>
+          </View>
+        </View>
+      )}
     </TouchableOpacity>
   );
 }
@@ -38,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     height: 100,
-    elevation: 1,
+    // elevation: 1,
     marginHorizontal: 20,
     marginVertical: 5,
     overflow: "hidden",
@@ -51,7 +99,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "500",
-    paddingBottom: 2,
     width: "80%",
   },
   address: {
